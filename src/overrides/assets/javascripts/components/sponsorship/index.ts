@@ -121,7 +121,7 @@ export function mountSponsorship(
     el.removeAttribute("hidden")
 
     /* Render public sponsors with avatar and links */
-    const list = getElement(":scope > :first-child", el)
+    const list = getElement(":scope > :first-of-type", el)
     for (const sponsor of sponsorship.sponsors)
       if (sponsor.type === "public")
         list.appendChild(renderPublicSponsor(sponsor.user))

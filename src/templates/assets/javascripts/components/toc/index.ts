@@ -146,7 +146,7 @@ export function watchTableOfContents(
       distinctUntilKeyChanged("height"),
       map(({ height }) => {
         const main = getComponentElement("main")
-        const grid = getElement(":scope > :first-child", main)
+        const grid = getElement(":scope > :first-of-type", main)
         return height + 0.8 * (
           grid.offsetTop -
           main.offsetTop
