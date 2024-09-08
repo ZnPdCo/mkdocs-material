@@ -61,7 +61,7 @@ export interface Announce {
 export function watchAnnounce(
   el: HTMLElement
 ): Observable<Announce> {
-  const button = getElement(".md-typeset > :first-of-type", el)
+  const button = getElement(".md-typeset > :first-child", el)
   return fromEvent(button, "click", { once: true })
     .pipe(
       map(() => getElement(".md-typeset", el)),

@@ -178,7 +178,7 @@ export function mountIconSearchResult(
     )
 
   /* Update search result metadata */
-  const meta = getElement(":scope > :first-of-type", el)
+  const meta = getElement(":scope > :first-child", el)
   push$
     .pipe(
       withLatestFrom(query$)
@@ -208,7 +208,7 @@ export function mountIconSearchResult(
 
   /* Update icon search result list */
   const file = el.getAttribute("data-mdx-mode") === "file"
-  const list = getElement(":scope > :last-of-type", el)
+  const list = getElement(":scope > :last-child", el)
   push$
     .pipe(
       tap(() => list.innerHTML = ""),

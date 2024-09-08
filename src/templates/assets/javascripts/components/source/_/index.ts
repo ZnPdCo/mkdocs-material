@@ -123,7 +123,7 @@ export function watchSource(
 export function mountSource(
   el: HTMLAnchorElement
 ): Observable<Component<Source>> {
-  const inner = getElement(":scope > :last-of-type", el)
+  const inner = getElement(":scope > :last-child", el)
   return defer(() => {
     const push$ = new Subject<Source>()
     push$.subscribe(({ facts }) => {

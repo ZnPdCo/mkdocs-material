@@ -136,7 +136,7 @@ export function mountSearch(
               if (active === query) {
                 const anchors = new Map<HTMLAnchorElement, number>()
                 for (const anchor of getElements<HTMLAnchorElement>(
-                  ":first-of-type [href]", result
+                  ":first-child [href]", result
                 )) {
                   const article = anchor.firstElementChild!
                   anchors.set(anchor, parseFloat(

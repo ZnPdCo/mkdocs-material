@@ -101,8 +101,8 @@ export function mountSearchResult(
   const container = el.parentElement!
 
   /* Retrieve nested components */
-  const meta = getElement(":scope > :first-of-type", el)
-  const list = getElement(":scope > :last-of-type", el)
+  const meta = getElement(":scope > :first-child", el)
+  const list = getElement(":scope > :last-child", el)
 
   /* Reveal to accessibility tree – see https://bit.ly/3iAA7t8 */
   watchToggle("search")
