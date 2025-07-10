@@ -19,14 +19,8 @@
 # IN THE SOFTWARE.
 
 name: build
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-  release:
-    types:
-      - published
+
+on: [push]
 
 env:
   NODE_VERSION: 18.x
