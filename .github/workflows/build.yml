@@ -23,8 +23,8 @@ name: build
 on: [push]
 
 env:
-  NODE_VERSION: 18.x
-  PYTHON_VERSION: 3.x
+  NODE_VERSION: 22.14
+  PYTHON_VERSION: 3.10
 
 permissions:
   contents: read
