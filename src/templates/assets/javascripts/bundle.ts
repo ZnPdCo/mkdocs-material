@@ -93,11 +93,13 @@ import "./polyfills"
 const selector = 'form[name="search"] > input';
 const WAIT_MS = 200;
 
-function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
+function debounce<F extends (...args: any[]) => any>(func: F, wait: number) {
+  let timeout: number | undefined;
+  return function (this: unknown, ...args: Parameters<F>) {
+    if (timeout !== undefined) {
+      window.clearTimeout(timeout);
+    }
+    timeout = window.setTimeout(() => {
       func.apply(this, args);
     }, wait);
   };
@@ -105,17 +107,22 @@ function debounce(func, wait) {
 
 const origAdd = EventTarget.prototype.addEventListener;
 
-EventTarget.prototype.addEventListener = function (type, listener, options) {
-  if (type === 'keyup' && this.matches(selector)) {
-    let wrapped;
-    const inner = function (...args) {
-      return listener.apply(this, args);
+EventTarget.prototype.addEventListener = function (
+  this: EventTarget,
+  type: string,
+  listener: EventListenerOrEventListenerObject,
+  options?: boolean | AddEventListenerOptions
+): void {
+  if (type === 'keyup' && this instanceof Element && this.matches(selector)) {
+    const inner = function (this: unknown, e: Event) {
+      return (listener as EventListener)(e);
     };
-    wrapped = debounce(inner, WAIT_MS);
-    return origAdd.call(this, type, wrapped, options);
+    const wrapped = debounce(inner, WAIT_MS);
+    origAdd.call(this, type, wrapped, options);
+    return;
   }
 
-  return origAdd.call(this, type, listener, options);
+  origAdd.call(this, type, listener, options);
 };
 
 /* ----------------------------------------------------------------------------
