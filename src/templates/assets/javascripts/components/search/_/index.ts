@@ -145,10 +145,11 @@ export function mountSearch(
                 }
 
                 /* Go to result with highest score, if any */
-                if (anchors.size) {
-                  const [[best]] = [...anchors].sort(([, a], [, b]) => b - a)
-                  best.click()
-                }
+                /* Patch: https://github.com/OI-wiki/mkdocs-material/pull/49 */
+                // if (anchors.size) {
+                //   const [[best]] = [...anchors].sort(([, a], [, b]) => b - a)
+                //   best.click()
+                // }
 
                 /* Otherwise omit form submission */
                 key.claim()

@@ -89,6 +89,35 @@ import {
 } from "./patches"
 import "./polyfills"
 
+/* Patch: https://github.com/OI-wiki/mkdocs-material/pull/49 */
+const selector = 'form[name="search"] > input';
+const WAIT_MS = 200;
+
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, wait);
+  };
+}
+
+const origAdd = EventTarget.prototype.addEventListener;
+
+EventTarget.prototype.addEventListener = function (type, listener, options) {
+  if (type === 'keyup' && this.matches(selector)) {
+    let wrapped;
+    const inner = function (...args) {
+      return listener.apply(this, args);
+    };
+    wrapped = debounce(inner, WAIT_MS);
+    return origAdd.call(this, type, wrapped, options);
+  }
+
+  return origAdd.call(this, type, listener, options);
+};
+
 /* ----------------------------------------------------------------------------
  * Functions - @todo refactor
  * ------------------------------------------------------------------------- */
